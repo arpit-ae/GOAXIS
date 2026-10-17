@@ -61,4 +61,10 @@ The implementation was checked for the existence of all Part 2 files, local page
 
 ## Part 4 implementation branch
 
-Backend implementation is merged into `main`. See `PART4-SETUP.md` for required Cloudflare setup, secret names, first-admin promotion, API routes and security boundaries. This is not live until the D1/R2 bindings and Cashfree sandbox secrets are configured and deployed. Existing Part 3 pages still use their frontend demo behavior; Part 5 must connect those forms to the APIs.
+The Part 4 backend has been merged into `main`. See `PART4-SETUP.md` for required Cloudflare setup, secret names, first-admin promotion, API routes and security boundaries. It is not live until the D1/R2 bindings and Cashfree sandbox secrets are configured and deployed.
+
+## Part 5 — integration and release readiness
+
+Part 5 is in `feature/part5-production-readiness` for review. It connects homepage, service and website-quotation forms to the enquiry API; switches signup/login to server-side session cookies; connects customer orders, profile updates, private document upload and Cashfree sandbox checkout; and changes the payment-return page to display server-confirmed order status. The browser-only Part 3 handlers are disabled when `part5.js` is loaded. Security response headers are configured for static assets and API responses, a GitHub Actions syntax/smoke-test workflow is included, and `PART5-LAUNCH-CHECKLIST.md` records the remaining release gates.
+
+**Release status: not production-ready yet.** Replace the D1 placeholder, configure the real Cloudflare D1/R2 bindings and sandbox secrets, configure rate limiting, implement email verification and password reset, arrange malware scanning or a safe document-upload policy, finish legal-policy review, and run full browser/payment end-to-end tests. Keep Cashfree in sandbox until these checks pass. The included smoke test is a static integration test, not proof that the live account, database, object storage or gateway works.
