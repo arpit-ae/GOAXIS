@@ -1,0 +1,32 @@
+name: GOAXIS checks
+
+on:
+  push:
+    branches: [main, "feature/part5-production-readiness"]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --check part2.js
+          node --check part3.js
+          node --check part5.js
+          node --check admin.js
+          node --input-type=module --check < src/worker.js
+          node --check tests/part5-smoke.mjs
+      - name: Run static integration smoke tests
+        run: node tests/part5-smoke.mjs

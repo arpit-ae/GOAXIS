@@ -19,9 +19,9 @@ CLOUDFLARE SETUP REQUIRED BEFORE IT CAN RUN
 6. Deploy Pages and verify /api/health.
 
 FIRST ADMIN ACCOUNT
-Create a normal account using signup, verify its email out-of-band, then promote it in the D1 console:
+Public signup is disabled by default with ENABLE_PUBLIC_SIGNUP=false. For a controlled bootstrap only, temporarily set ENABLE_PUBLIC_SIGNUP=true in a non-public Preview environment, create the intended owner account, verify ownership out of band, and promote that account in D1:
 UPDATE Users SET role='admin' WHERE email='YOUR_VERIFIED_ADMIN_EMAIL';
-Public signup cannot set the admin role. Visit /admin.html after signing in.
+Then set ENABLE_PUBLIC_SIGNUP=false again and redeploy. Do not enable open customer registration on production until email verification, password reset and rate-limiting safeguards are implemented and tested. Public signup cannot set the admin role. Visit /admin.html after signing in.
 
 API ROUTES
 GET /api/health
@@ -37,4 +37,4 @@ GET /api/admin/overview; PATCH /api/admin/orders/:id; PATCH /api/admin/documents
 AMOUNT AND PRODUCTION NOTES
 Order amounts are whole INR rupees, not paise. Seed prices are zero (quotation required); checkout rejects zero-value orders. Admin must set an approved amount before checkout. Cashfree is sandbox by default. Do not switch to production until merchant verification and end-to-end tests pass.
 
-Before collecting real customer data, Part 5 must connect signup/login/dashboard/enquiry forms to these APIs, add rate limiting, email verification and password reset, verify R2 access/download policy and malware scanning, run browser tests, and verify payment sandbox webhooks. The R2 bucket is private; no public object URLs are returned.
+Part 5 connects the signup/login/dashboard/enquiry forms to these APIs, checks webhook amount/currency against the recorded payment, adds security headers and a static smoke-test workflow. Before collecting real customer data, configure rate limiting, email verification and password reset, confirm R2 access policy and malware scanning, run browser tests, and verify payment sandbox webhooks. See PART5-LAUNCH-CHECKLIST.md. The R2 bucket is private; no public object URLs are returned.

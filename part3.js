@@ -172,6 +172,7 @@
 
   const year = byId("current-year");
   if (year) year.textContent = String(new Date().getFullYear());
+  if (window.GOAXIS_USE_API) return;
 
   const signup = byId("signup-form");
   if (signup) signup.addEventListener("submit", async event => {
