@@ -1,0 +1,5 @@
+# Static Cloudflare Pages configuration for Part 1.
+# Backend bindings will be configured in later parts.
+name = "goaxis-consultancy"
+compatibility_date = "2026-10-17"
+pages_build_output_dir = "."
