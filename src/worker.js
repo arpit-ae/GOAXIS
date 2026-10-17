@@ -1,4 +1,4 @@
-const J={"content-type":"application/json; charset=utf-8","cache-control":"no-store","x-content-type-options":"nosniff"};
+const J={"content-type":"application/json; charset=utf-8","cache-control":"no-store","x-content-type-options":"nosniff","x-frame-options":"DENY","referrer-policy":"strict-origin-when-cross-origin","permissions-policy":"camera=(), microphone=(), geolocation=()"};
 const out=(d,s=200,h={})=>new Response(JSON.stringify(d),{status:s,headers:{...J,...h}});
 const err=(e,s=400)=>out({error:e},s), time=()=>new Date().toISOString(), te=new TextEncoder();
 const token=(n=32)=>Array.from(crypto.getRandomValues(new Uint8Array(n)),x=>x.toString(16).padStart(2,"0")).join("");
