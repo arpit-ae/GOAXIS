@@ -39,11 +39,12 @@ Continue cumulatively from this repository. Do not restart or overwrite complete
 ## Part 3 acceptance
 
 - [x] Registration page with required name/email/password and confirmation validation
-- [x] Login preview and redirect to dashboard for a matching session profile
+- [x] Login preview verifies email plus a salted PBKDF2 password verifier in current-tab session storage
 - [x] Dashboard route checks for a demo session and redirects to login otherwise
 - [x] Profile display and browser-session profile editing
-- [x] Example order IDs, status cards and progress milestones
-- [x] Document selection UI with file type/size checks and clear preview-only messaging
+- [x] Generate unique `GOAX-YYYY-00001`-style demo request IDs and create request records in current-tab session storage
+- [x] Display 11 illustrative request stages and per-request detail tracking
+- [x] Document selection UI with file type/size checks; stores only selected-file metadata against the selected demo request, never file bytes
 - [x] Logout action and customer-login links added to existing public pages
 - [x] Responsive styling and accessible form feedback
 - [ ] Production authentication, persistent orders and real document upload (Part 4)
@@ -51,7 +52,7 @@ Continue cumulatively from this repository. Do not restart or overwrite complete
 
 ## Part 3 boundaries
 
-This is only a frontend demonstration. It does not store passwords, authenticate users securely, create real orders, save profile data to a server, or upload files. The demo profile exists only in the browser session. Never enter real passwords or sensitive identity documents. Part 4 must implement server-side identity, secure sessions, authorization, D1 persistence and private R2 storage before collecting real customer information.
+This is only a browser-tab frontend demonstration. It does not store raw passwords or authenticate users securely; a salted PBKDF2 verifier is held in session storage solely to demonstrate a password check. It does not create real orders, save data to a server, or upload file contents. Demo profiles, requests and selected-file metadata exist only in the current tab session. Never enter real/reused passwords or select sensitive identity documents. Part 4 must implement server-side identity, secure sessions, authorization, D1 persistence and private R2 storage before collecting real customer information.
 
 ## Part 2 boundaries
 

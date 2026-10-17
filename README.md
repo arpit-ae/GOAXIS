@@ -24,11 +24,11 @@ Responsive static website for a consultancy offering website development and pra
 
 - `signup.html`: registration form with name, email, optional company/phone and password confirmation.
 - `login.html`: browser-session demo sign-in.
-- `dashboard.html`: example order cards and IDs, progress tracking, profile editor and document-selection interface.
-- `part3.css` and `part3.js`: responsive portal styling, client-side validation, session-only demo profile and logout.
+- `dashboard.html`: dynamically generated demo request IDs, request creation, 11-stage illustrative status tracking, profile editor, and document-metadata preview.
+- `part3.css` and `part3.js`: responsive portal styling, signup/login password-verifier demonstration, browser-tab session gate, local-only demo order creation, unique `GOAX-YYYY-00001`-style IDs, document metadata selection, and logout.
 - Customer Login navigation added to the existing homepage, services catalogue, service details and website-builder pages.
 
-**Important security boundary:** Part 3 is a UI prototype, not real authentication. Passwords are not stored; the profile is held in browser session storage. Demo order records are hardcoded and document selection only previews the filename—the file is not uploaded. Do not use real passwords or sensitive customer documents. Part 4 must replace the demo with server-side authentication, secure session cookies, D1 persistence, authorization checks and private R2 uploads before any real customer data is collected.
+**Important security boundary:** Part 3 is a browser-only UI/workflow prototype, not production authentication. The raw password is not stored, but a salted PBKDF2 verifier and profile are held in this tab's session storage for the sign-in demonstration. Demo orders and file metadata also stay in this tab; they are not sent to GOAXIS and do not sync across tabs/devices. Selecting a file never uploads or reads its contents. Do not use real or reused passwords or sensitive customer documents. Part 4 must replace the demo with server-side authentication, secure sessions, D1 persistence, authorization checks and private R2 uploads before collecting real customer data.
 
 ## Preview locally
 
@@ -42,7 +42,7 @@ Then visit `http://localhost:8000`.
 
 ## Current form behaviour and limitations
 
-The homepage, service-enquiry and website-quotation forms are frontend previews. Browser validation runs, but form details are **not sent to an administrator or saved**. There is no database, customer account system, document upload, lead creation, email notification or payment processing yet. Those require later backend implementation. Do not enter actual sensitive information into the preview forms.
+The homepage, service-enquiry and website-quotation forms are frontend previews. Browser validation runs, but form details are **not sent to an administrator or saved**. Part 3 adds a separate browser-only account and order workflow demonstration; it is not a server-backed customer account system. There is no database, real document upload, lead creation, email notification or payment processing yet. Those require later backend implementation. Do not enter actual sensitive information into the preview forms.
 
 Before launch, add verified contact details, confirm branding and language, review the legal drafts, connect secure APIs with server-side validation, and test the full workflow. Keep API secrets in hosting secrets, never in GitHub or frontend code.
 
@@ -50,7 +50,7 @@ Before launch, add verified contact details, confirm branding and language, revi
 
 1. **Part 1 — Complete:** Homepage and responsive frontend foundation.
 2. **Part 2 — Complete (frontend):** Service catalogue, service detail pages, website-builder packages and browser-validated enquiry/quotation forms.
-3. **Part 3 — Complete (frontend preview):** Signup/login UI, customer dashboard, sample order tracking, profile editor and document-selection UI. Server authentication and persistence are deferred to Part 4.
+3. **Part 3 — Complete (frontend prototype):** Signup/login with browser-tab password-verifier check, protected-by-JavaScript dashboard gate, generated demo request IDs, 11 illustrative status stages, profile editing and document metadata preview. Real server authentication and persistence remain Part 4 work.
 4. **Part 4 — Implemented in branch:** Cloudflare Pages API routes, D1 schema, server-side account/session APIs, private R2 upload endpoint, Cashfree sandbox payment/webhook handling, admin APIs and admin console. Cloudflare bindings/secrets and frontend API wiring are still required before real use.
 5. **Part 5 — Pending:** Connect all existing forms/dashboard to the API, security review, browser/end-to-end tests, deployment and launch checklist.
 
