@@ -153,7 +153,7 @@
   const paymentStatus=byId("payment-return-status"),refreshStatus=byId("refresh-payment-status");
   if(paymentStatus){
     const checkStatus=async()=>{
-      const orderId=new URLSearchParams(location.search).get("order_id");
+      const orderId=(new URLSearchParams(location.search).get("goax_order_id") || new URLSearchParams(location.search).get("order_id"));
       if(!orderId)return tell(paymentStatus,"No order ID supplied. Open your dashboard to view orders.",true);
       tell(paymentStatus,"Checking server-confirmed payment status…");
       try{const data=await api("/orders/"+encodeURIComponent(orderId)),order=data.order;tell(paymentStatus,order.status==="Paid"||order.status==="Completed"?"Payment confirmed by the server for order "+order.id+". Current status: "+order.status+".":"Order "+order.id+" is currently "+order.status+". The verified gateway notification may still be processing. Refresh to check again.");}
