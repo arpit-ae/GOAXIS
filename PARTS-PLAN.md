@@ -7,7 +7,7 @@ Continue cumulatively from this repository. Do not restart or overwrite complete
 | 1 | Homepage and responsive frontend foundation | Complete |
 | 2 | Service catalogue, website-builder requirements and enquiry/quotation workflow | Complete — frontend |
 | 3 | Customer accounts, dashboard, orders and document interface | Complete — frontend preview |
-| 4 | Backend, database, admin dashboard and payment integration | Pending |
+| 4 | Backend, database, admin dashboard and payment integration | Implemented in branch; Cloudflare configuration and testing pending |
 | 5 | Security, testing, deployment and final launch review | Pending |
 
 ## Part 1 acceptance
@@ -62,3 +62,20 @@ The pages and forms are a frontend prototype. They do not create leads, email th
 Text-based logo, navy/mint colours, English copy, request-a-quote rather than invented prices, contact placeholders and tagline “Build. Register. Grow.”
 
 Government registrations and licences remain subject to authority rules, eligibility and decisions. Never promise guaranteed approvals or commit payment secrets, passwords or customer documents.
+
+
+## Part 4 implementation checklist
+
+- [x] Add Pages Function API router and Worker handlers
+- [x] Add D1 migration for users, sessions, services, leads, orders, payments and documents
+- [x] Add server-side password hashing and hashed session tokens
+- [x] Add customer, service, enquiry and order API endpoints with authorization
+- [x] Add private R2 upload endpoint with file size/type checks
+- [x] Add Cashfree sandbox order creation and signed webhook handling
+- [x] Add admin overview, order status/price approval and document verification APIs
+- [x] Add admin operations UI and setup documentation
+- [ ] Replace wrangler.toml placeholder database ID and create D1/R2 resources
+- [ ] Add Cashfree sandbox secrets in Cloudflare (not GitHub)
+- [ ] Promote a verified account to admin using the documented D1 command
+- [ ] Connect Part 3 frontend forms/dashboard and enquiry forms to APIs
+- [ ] Run sandbox webhook, upload, browser and authorization tests in Part 5

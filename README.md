@@ -51,9 +51,14 @@ Before launch, add verified contact details, confirm branding and language, revi
 1. **Part 1 — Complete:** Homepage and responsive frontend foundation.
 2. **Part 2 — Complete (frontend):** Service catalogue, service detail pages, website-builder packages and browser-validated enquiry/quotation forms.
 3. **Part 3 — Complete (frontend preview):** Signup/login UI, customer dashboard, sample order tracking, profile editor and document-selection UI. Server authentication and persistence are deferred to Part 4.
-4. **Part 4 — Pending:** Cloudflare Workers APIs, D1 database, R2 document storage, admin operations and payment gateway.
-5. **Part 5 — Pending:** Security review, end-to-end tests, deployment and launch checklist.
+4. **Part 4 — Implemented in branch:** Cloudflare Pages API routes, D1 schema, server-side account/session APIs, private R2 upload endpoint, Cashfree sandbox payment/webhook handling, admin APIs and admin console. Cloudflare bindings/secrets and frontend API wiring are still required before real use.
+5. **Part 5 — Pending:** Connect all existing forms/dashboard to the API, security review, browser/end-to-end tests, deployment and launch checklist.
 
 ## Part 2 static integration checks
 
 The implementation was checked for the existence of all Part 2 files, local page links, matching service-query keys, enquiry form wiring, package selection mapping, browser validation markers, truthful frontend-only submission notices and responsive CSS. All 10 checks passed. These are static integration checks; a full browser/device and production end-to-end test remains part of the final QA work.
+
+
+## Part 4 implementation branch
+
+Backend implementation is prepared on `feature/part4-backend-payments`. See `PART4-SETUP.md` for required Cloudflare setup, secret names, first-admin promotion, API routes and security boundaries. This is not live until the D1/R2 bindings and Cashfree sandbox secrets are configured and the branch is merged/deployed. Existing Part 3 pages still use their frontend demo behavior; Part 5 must connect those forms to the APIs.
