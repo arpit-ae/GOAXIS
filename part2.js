@@ -43,7 +43,7 @@ document.querySelectorAll(".package-select").forEach(button => button.addEventLi
 }));
 function setupLocalPreview(formId, feedbackId, message) {
   const form = $(formId), feedback = $(feedbackId);
-  if (!form || !feedback) return;
+  if (!form || !feedback || window.GOAXIS_USE_API) return;
   form.addEventListener("submit", event => {
     event.preventDefault();
     if (!form.reportValidity()) return;
