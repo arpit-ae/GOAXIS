@@ -20,6 +20,16 @@ Responsive static website for a consultancy offering website development and pra
 - Client-side validation, responsive styles, shared navigation and package-to-form selection
 - Quote-only prices until actual fees are approved; government approvals and timelines are not guaranteed
 
+## Part 3 delivered — customer portal frontend preview
+
+- `signup.html`: registration form with name, email, optional company/phone and password confirmation.
+- `login.html`: browser-session demo sign-in.
+- `dashboard.html`: example order cards and IDs, progress tracking, profile editor and document-selection interface.
+- `part3.css` and `part3.js`: responsive portal styling, client-side validation, session-only demo profile and logout.
+- Customer Login navigation added to the existing homepage, services catalogue, service details and website-builder pages.
+
+**Important security boundary:** Part 3 is a UI prototype, not real authentication. Passwords are not stored; the profile is held in browser session storage. Demo order records are hardcoded and document selection only previews the filename—the file is not uploaded. Do not use real passwords or sensitive customer documents. Part 4 must replace the demo with server-side authentication, secure session cookies, D1 persistence, authorization checks and private R2 uploads before any real customer data is collected.
+
 ## Preview locally
 
 Open `index.html` directly, or run:
@@ -40,7 +50,7 @@ Before launch, add verified contact details, confirm branding and language, revi
 
 1. **Part 1 — Complete:** Homepage and responsive frontend foundation.
 2. **Part 2 — Complete (frontend):** Service catalogue, service detail pages, website-builder packages and browser-validated enquiry/quotation forms.
-3. **Part 3 — Pending:** Customer registration/login, dashboard, orders and document interface.
+3. **Part 3 — Complete (frontend preview):** Signup/login UI, customer dashboard, sample order tracking, profile editor and document-selection UI. Server authentication and persistence are deferred to Part 4.
 4. **Part 4 — Pending:** Cloudflare Workers APIs, D1 database, R2 document storage, admin operations and payment gateway.
 5. **Part 5 — Pending:** Security review, end-to-end tests, deployment and launch checklist.
 
