@@ -1,0 +1,48 @@
+name: Part 5 — validation
+
+on:
+  push:
+    branches: [main, "feature/part5-deployment"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --check admin.js
+          node --check part2.js
+          node --check part3.js
+          node --check src/worker.js
+          node --check 'functions/api/[[path]].js'
+      - name: Validate required launch files
+        run: |
+          test -f index.html
+          test -f services.html
+          test -f website-builder.html
+          test -f signup.html
+          test -f login.html
+          test -f dashboard.html
+          test -f admin.html
+          test -f payment-return.html
+          test -f wrangler.toml
+          test -f migrations/0001_initial.sql
+          test -f _headers
+          test -f PART5-DEPLOYMENT.md
+      - name: Check for committed payment-secret assignments
+        run: |
+          if grep -RInE 'CASHFREE_SECRET_KEY[[:space:]]*=[[:space:]]*["\x27][A-Za-z0-9_-]{12,}|RAZORPAY_KEY_SECRET[[:space:]]*=[[:space:]]*["\x27][A-Za-z0-9_-]{12,}' --exclude-dir=.git --exclude='PART5-DEPLOYMENT.md' .; then
+            echo "Potential payment secret found in repository."
+            exit 1
+          fi
