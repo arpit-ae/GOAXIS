@@ -7,7 +7,7 @@ Continue cumulatively from this repository. Do not restart or overwrite complete
 | 1 | Homepage and responsive frontend foundation | Complete |
 | 2 | Service catalogue, website-builder requirements and enquiry/quotation workflow | Complete — frontend |
 | 3 | Customer accounts, dashboard, orders and document interface | Complete — frontend preview |
-| 4 | Backend, database, admin dashboard and payment integration | Implemented in branch; Cloudflare configuration and testing pending |
+| 4 | Backend, database, admin dashboard and payment integration | Backend committed; Cloudflare configuration and testing pending |
 | 5 | Security, testing, deployment and final launch review | Pending |
 
 ## Part 1 acceptance
