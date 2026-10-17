@@ -19,9 +19,9 @@ CLOUDFLARE SETUP REQUIRED BEFORE IT CAN RUN
 6. Deploy Pages and verify /api/health.
 
 FIRST ADMIN ACCOUNT
-Create a normal account using signup, verify its email out-of-band, then promote it in the D1 console:
+Public signup is disabled by default with ENABLE_PUBLIC_SIGNUP=false. For a controlled bootstrap only, temporarily set ENABLE_PUBLIC_SIGNUP=true in a non-public Preview environment, create the intended owner account, verify ownership out of band, and promote that account in D1:
 UPDATE Users SET role='admin' WHERE email='YOUR_VERIFIED_ADMIN_EMAIL';
-Public signup cannot set the admin role. Visit /admin.html after signing in.
+Then set ENABLE_PUBLIC_SIGNUP=false again and redeploy. Do not enable open customer registration on production until email verification, password reset and rate-limiting safeguards are implemented and tested. Public signup cannot set the admin role. Visit /admin.html after signing in.
 
 API ROUTES
 GET /api/health
