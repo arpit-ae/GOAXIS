@@ -52,7 +52,7 @@ Before launch, add verified contact details, confirm branding and language, revi
 2. **Part 2 — Complete (frontend):** Service catalogue, service detail pages, website-builder packages and browser-validated enquiry/quotation forms.
 3. **Part 3 — Complete (frontend prototype):** Signup/login with browser-tab password-verifier check, protected-by-JavaScript dashboard gate, generated demo request IDs, 11 illustrative status stages, profile editing and document metadata preview. Real server authentication and persistence remain Part 4 work.
 4. **Part 4 — Implemented in branch:** Cloudflare Pages API routes, D1 schema, server-side account/session APIs, private R2 upload endpoint, Cashfree sandbox payment/webhook handling, admin APIs and admin console. Cloudflare bindings/secrets and frontend API wiring are still required before real use.
-5. **Part 5 — Pending:** Connect all existing forms/dashboard to the API, security review, browser/end-to-end tests, deployment and launch checklist.
+5. **Part 5 — Release preparation added:** Cloudflare Pages security headers, GitHub Actions static validation, configurable deployment smoke test and `PART5-DEPLOYMENT.md` launch runbook. Cloudflare resources/secrets, full frontend-to-API wiring, rate limiting, email verification/password reset and end-to-end sandbox tests remain launch blockers; see `PART5-DEPLOYMENT.md`.
 
 ## Part 2 static integration checks
 
