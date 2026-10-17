@@ -14,3 +14,4 @@ bucket_name = "goaxis-customer-documents"
 
 [vars]
 CASHFREE_ENV = "sandbox"
+ENABLE_PUBLIC_SIGNUP = "false"
