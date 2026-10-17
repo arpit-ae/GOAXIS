@@ -61,4 +61,4 @@ The implementation was checked for the existence of all Part 2 files, local page
 
 ## Part 4 implementation branch
 
-Backend implementation is prepared on `feature/part4-backend-payments`. See `PART4-SETUP.md` for required Cloudflare setup, secret names, first-admin promotion, API routes and security boundaries. This is not live until the D1/R2 bindings and Cashfree sandbox secrets are configured and the branch is merged/deployed. Existing Part 3 pages still use their frontend demo behavior; Part 5 must connect those forms to the APIs.
+Backend implementation is merged into `main`. See `PART4-SETUP.md` for required Cloudflare setup, secret names, first-admin promotion, API routes and security boundaries. This is not live until the D1/R2 bindings and Cashfree sandbox secrets are configured and deployed. Existing Part 3 pages still use their frontend demo behavior; Part 5 must connect those forms to the APIs.
