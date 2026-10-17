@@ -26,7 +26,7 @@ jobs:
           node --check part3.js
           node --check part5.js
           node --check admin.js
-          node --check src/worker.js
+          node --input-type=module --check < src/worker.js
           node --check tests/part5-smoke.mjs
       - name: Run static integration smoke tests
         run: node tests/part5-smoke.mjs
