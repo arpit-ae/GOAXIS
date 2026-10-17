@@ -4,7 +4,7 @@ Responsive static homepage and frontend foundation for a five-part consultancy w
 
 ## Part 1 delivered
 - Responsive homepage, sticky navigation and mobile navigation menu
-- Service cards: website development, GST/Udyam, FSSAI, IEC/APEDA, business documents
+- Service cards: website development, GST/Udyam, FSSAI, IEC/APEDA and business documents
 - Website Builder section and quote-request calls to action
 - How-it-works, About and contact sections
 - Enquiry form UI with browser-side validation

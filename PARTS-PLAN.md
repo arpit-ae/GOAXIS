@@ -1,11 +1,11 @@
 # GOAXIS CONSULTANCY — Five-Part Build Tracker
 
-This is a cumulative build. Continue from this repository and do not restart or overwrite completed work.
+Continue cumulatively from this repository. Do not restart or overwrite completed work.
 
 | Part | Scope | Status |
 |---|---|---|
 | 1 | Homepage and responsive frontend foundation | Implemented |
-| 2 | Service catalogue, website-builder requirements and enquiries/quotations | Pending |
+| 2 | Service catalogue, website-builder requirements and enquiry/quotation workflow | Pending |
 | 3 | Customer accounts, dashboard, orders and documents | Pending |
 | 4 | Workers backend, D1, R2, admin dashboard and payments | Pending |
 | 5 | Security, testing, deployment and launch review | Pending |
@@ -22,6 +22,6 @@ This is a cumulative build. Continue from this repository and do not restart or 
 - [ ] Review legal pages before launch
 
 ## Defaults used
-Text-based logo, navy/mint colors, English copy, request a quote instead of invented prices, generic contact placeholders, and tagline “Build. Register. Grow.”
+Text-based logo, navy/mint colors, English copy, request a quote instead of invented prices, contact placeholders and tagline “Build. Register. Grow.”
 
 Government registrations and licences remain subject to authority rules, eligibility and decisions. Never promise guaranteed approvals or commit payment secrets, passwords or customer documents.
