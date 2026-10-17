@@ -46,4 +46,4 @@ Before launch, add verified contact details, confirm branding and language, revi
 
 ## Part 2 static integration checks
 
-The implementation was checked for the existence of all Part 2 files, local page links, matching service-query keys, enquiry form wiring, package selection mapping, browser validation markers, truthful frontend-only submission notices and responsive CSS. All 9 checks passed. These are static integration checks; a full browser/device and production end-to-end test remains part of the final QA work.
+The implementation was checked for the existence of all Part 2 files, local page links, matching service-query keys, enquiry form wiring, package selection mapping, browser validation markers, truthful frontend-only submission notices and responsive CSS. All 10 checks passed. These are static integration checks; a full browser/device and production end-to-end test remains part of the final QA work.
