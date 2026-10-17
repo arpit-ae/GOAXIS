@@ -6,7 +6,7 @@ Continue cumulatively from this repository. Do not restart or overwrite complete
 |---|---|---|
 | 1 | Homepage and responsive frontend foundation | Complete |
 | 2 | Service catalogue, website-builder requirements and enquiry/quotation workflow | Complete — frontend |
-| 3 | Customer accounts, dashboard, orders and document interface | Complete — frontend preview |
+| 3 | Customer accounts, dashboard, orders and document interface | API-integrated; deployment and tests pending |
 | 4 | Backend, database, admin dashboard and payment integration | Implemented in branch; Cloudflare configuration and testing pending |
 | 5 | Security, testing, deployment and final launch review | Pending |
 
@@ -33,25 +33,23 @@ Continue cumulatively from this repository. Do not restart or overwrite complete
 - [x] Package selection buttons populate the quotation form
 - [x] Responsive styling and mobile navigation on the new pages
 - [x] Quote-only messaging; no unapproved prices or guaranteed government approvals
-- [x] Forms disclose that submissions are preview-only and are not sent or saved
+- [x] Service and website enquiry forms submit to /api/enquiry with consent and feedback (Cloudflare configuration required)
 - [x] Static integration checks: 10/10 passed (links, service keys, form wiring, package mapping, validation indicators and responsive styles)
 
 ## Part 3 acceptance
 
-- [x] Registration page with required name/email/password and confirmation validation
-- [x] Login preview and redirect to dashboard for a matching session profile
-- [x] Dashboard route checks for a demo session and redirects to login otherwise
-- [x] Profile display and browser-session profile editing
-- [x] Example order IDs, status cards and progress milestones
-- [x] Document selection UI with file type/size checks and clear preview-only messaging
-- [x] Logout action and customer-login links added to existing public pages
-- [x] Responsive styling and accessible form feedback
-- [ ] Production authentication, persistent orders and real document upload (Part 4)
-- [ ] Browser/device and production end-to-end testing (Part 5)
+- [x] Registration form wired to server signup; name/email/password validation and confirmation
+- [x] Login wired to server authentication and secure session cookie
+- [x] Customer dashboard redirects unauthenticated visitors to login
+- [x] Profile, order list and service-request form wired to persistent APIs
+- [x] Private customer document upload/download UI connected to authenticated endpoints
+- [x] Cashfree checkout button is offered only for a server-priced order awaiting payment
+- [x] Logout clears the server-side session
+- [ ] Browser/device and deployed end-to-end tests (Part 5)
 
 ## Part 3 boundaries
 
-This is only a frontend demonstration. It does not store passwords, authenticate users securely, create real orders, save profile data to a server, or upload files. The demo profile exists only in the browser session. Never enter real passwords or sensitive identity documents. Part 4 must implement server-side identity, secure sessions, authorization, D1 persistence and private R2 storage before collecting real customer information.
+Frontend code is integrated but will not operate as a complete portal from a static file URL. It requires the Pages Function API, D1/R2 bindings and correctly configured payment secrets. Email verification and password reset are not included. Do not collect real sensitive documents before Part 5 malware-scanning, retention and privacy controls are reviewed.
 
 ## Part 2 boundaries
 
@@ -66,16 +64,17 @@ Government registrations and licences remain subject to authority rules, eligibi
 
 ## Part 4 implementation checklist
 
-- [x] Add Pages Function API router and Worker handlers
-- [x] Add D1 migration for users, sessions, services, leads, orders, payments and documents
-- [x] Add server-side password hashing and hashed session tokens
-- [x] Add customer, service, enquiry and order API endpoints with authorization
-- [x] Add private R2 upload endpoint with file size/type checks
-- [x] Add Cashfree sandbox order creation and signed webhook handling
-- [x] Add admin overview, order status/price approval and document verification APIs
-- [x] Add admin operations UI and setup documentation
-- [ ] Replace wrangler.toml placeholder database ID and create D1/R2 resources
-- [ ] Add Cashfree sandbox secrets in Cloudflare (not GitHub)
-- [ ] Promote a verified account to admin using the documented D1 command
-- [ ] Connect Part 3 frontend forms/dashboard and enquiry forms to APIs
-- [ ] Run sandbox webhook, upload, browser and authorization tests in Part 5
+- [x] Route /api/* from Pages Functions to src/worker.js
+- [x] Add migration 0002_part4_backend.sql with namespaced app_* D1 tables and service catalogue
+- [x] Add password hashing, opaque hashed session tokens, HttpOnly/Secure/SameSite cookies and basic login throttling
+- [x] Add profile, service list, enquiry, order request/list/detail APIs
+- [x] Add owner/admin authorization for private R2 upload and download; supported types and 5 MB cap
+- [x] Add admin lead review, quote creation, workflow status and document verification APIs and UI
+- [x] Add Cashfree hosted checkout, raw-body webhook signature checks, server-side verification and amount/currency matching
+- [x] Wire signup/login/dashboard/home/service/website enquiry forms to API endpoints
+- [x] Document bindings, Cashfree secrets, first-admin bootstrap and sandbox checks
+- [ ] Replace the D1 database ID placeholder and create/verify Cloudflare D1/R2 resources
+- [ ] Add Cashfree sandbox secrets and bootstrap the first administrator
+- [ ] Run live preview smoke tests and payment sandbox tests during Part 5
+
+Code changes are implemented on the Part 4 feature branch; deployment and actual gateway testing are not claimed complete.

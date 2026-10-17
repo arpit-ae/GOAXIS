@@ -20,15 +20,24 @@ Responsive static website for a consultancy offering website development and pra
 - Client-side validation, responsive styles, shared navigation and package-to-form selection
 - Quote-only prices until actual fees are approved; government approvals and timelines are not guaranteed
 
-## Part 3 delivered — customer portal frontend preview
+## Part 3 delivered — customer portal integrated
 
-- `signup.html`: registration form with name, email, optional company/phone and password confirmation.
-- `login.html`: browser-session demo sign-in.
-- `dashboard.html`: example order cards and IDs, progress tracking, profile editor and document-selection interface.
-- `part3.css` and `part3.js`: responsive portal styling, client-side validation, session-only demo profile and logout.
-- Customer Login navigation added to the existing homepage, services catalogue, service details and website-builder pages.
+- signup.html and login.html call the server-side account endpoints; passwords are not held in browser storage.
+- dashboard.html loads the signed-in user's profile and orders, supports service requests, edits the profile, and uploads files against an order.
+- part3.js handles authenticated API requests, feedback, logout, order status and Cashfree hosted checkout.
+- Customer order and document access is enforced on the server; the browser cannot set a payable amount.
+- Cloudflare bindings/secrets and end-to-end tests are required before real use; email verification and password reset are not included.
 
-**Important security boundary:** Part 3 is a UI prototype, not real authentication. Passwords are not stored; the profile is held in browser session storage. Demo order records are hardcoded and document selection only previews the filename—the file is not uploaded. Do not use real passwords or sensitive customer documents. Part 4 must replace the demo with server-side authentication, secure session cookies, D1 persistence, authorization checks and private R2 uploads before any real customer data is collected.
+## Part 4 delivered in code — configuration still required
+
+- src/worker.js: API handlers for accounts/sessions, services, enquiries, orders, admin operations, private document access, and Cashfree payments.
+- migrations/0002_part4_backend.sql: namespaced D1 tables preserve the earlier prototype schema and migration history.
+- admin.html, admin.js and admin.css: administrator portal to review leads, quote orders, update workflow status and verify documents.
+- functions/api/[[path]].js routes /api/* requests to the Worker module.
+- payment-return.html and payment-result.js check payment status through the server rather than treating a redirect as proof of payment.
+- Homepage, service and website-builder enquiries now submit to the API instead of showing a prototype-only success message.
+
+**Important:** these are code changes, not a claim that the live Cloudflare site is deployed. Follow PART4-SETUP.md to apply the migration, replace the D1 ID placeholder, verify R2 bindings and add Cashfree sandbox secrets. Complete Part 5 end-to-end tests before live payments or real sensitive-document collection.
 
 ## Preview locally
 
@@ -42,7 +51,7 @@ Then visit `http://localhost:8000`.
 
 ## Current form behaviour and limitations
 
-The homepage, service-enquiry and website-quotation forms are frontend previews. Browser validation runs, but form details are **not sent to an administrator or saved**. There is no database, customer account system, document upload, lead creation, email notification or payment processing yet. Those require later backend implementation. Do not enter actual sensitive information into the preview forms.
+Enquiry forms call /api/enquiry and save records to D1 when the Cloudflare backend is correctly configured and deployed. Opening index.html from a file URL or using a static-only server does not provide the API. For browser testing, run the site through Cloudflare Pages/Wrangler with D1/R2 bindings configured. Email notifications and password reset are not implemented. Do not upload real sensitive documents before Part 5 security checks.
 
 Before launch, add verified contact details, confirm branding and language, review the legal drafts, connect secure APIs with server-side validation, and test the full workflow. Keep API secrets in hosting secrets, never in GitHub or frontend code.
 
@@ -50,15 +59,15 @@ Before launch, add verified contact details, confirm branding and language, revi
 
 1. **Part 1 — Complete:** Homepage and responsive frontend foundation.
 2. **Part 2 — Complete (frontend):** Service catalogue, service detail pages, website-builder packages and browser-validated enquiry/quotation forms.
-3. **Part 3 — Complete (frontend preview):** Signup/login UI, customer dashboard, sample order tracking, profile editor and document-selection UI. Server authentication and persistence are deferred to Part 4.
-4. **Part 4 — Implemented in branch:** Cloudflare Pages API routes, D1 schema, server-side account/session APIs, private R2 upload endpoint, Cashfree sandbox payment/webhook handling, admin APIs and admin console. Cloudflare bindings/secrets and frontend API wiring are still required before real use.
-5. **Part 5 — Pending:** Connect all existing forms/dashboard to the API, security review, browser/end-to-end tests, deployment and launch checklist.
+3. **Part 3 — Integrated with Part 4 APIs:** Signup/login, customer dashboard, persistent order tracking, profile editor and authenticated private document upload; live use requires Cloudflare resources and testing.
+4. **Part 4 — Implemented in branch:** Pages Functions API, D1 migration, server-side accounts/sessions, private R2 upload/download, Cashfree hosted checkout/webhook checks, admin APIs/console and frontend wiring. Cloudflare bindings/secrets and end-to-end verification remain.
+5. **Part 5 — Pending:** Browser and payment-sandbox end-to-end tests, malware scanning, security/privacy review, deployment and launch checklist.
 
 ## Part 2 static integration checks
 
-The implementation was checked for the existence of all Part 2 files, local page links, matching service-query keys, enquiry form wiring, package selection mapping, browser validation markers, truthful frontend-only submission notices and responsive CSS. All 10 checks passed. These are static integration checks; a full browser/device and production end-to-end test remains part of the final QA work.
+Earlier static checks covered page links, service keys, package selection and form validation. Part 4 changes enquiries to API submissions; a browser/device test against configured Cloudflare preview resources is still required.
 
 
 ## Part 4 implementation branch
 
-Backend implementation is prepared on `feature/part4-backend-payments`. See `PART4-SETUP.md` for required Cloudflare setup, secret names, first-admin promotion, API routes and security boundaries. This is not live until the D1/R2 bindings and Cashfree sandbox secrets are configured and the branch is merged/deployed. Existing Part 3 pages still use their frontend demo behavior; Part 5 must connect those forms to the APIs.
+Backend implementation is on feature/part4-backend-payments. See PART4-SETUP.md for migration, D1/R2 setup, Cashfree sandbox secrets, one-time admin bootstrap and security boundaries. This is not live until the branch is merged/deployed and the configured preview passes end-to-end tests.

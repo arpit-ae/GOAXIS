@@ -41,16 +41,43 @@ document.querySelectorAll(".package-select").forEach(button => button.addEventLi
   const packageField = $("#package");
   if (packageField) { packageField.value = button.dataset.package; $("#quote-form-section")?.scrollIntoView({behavior:"smooth"}); packageField.focus({preventScroll:true}); }
 }));
-function setupLocalPreview(formId, feedbackId, message) {
-  const form = $(formId), feedback = $(feedbackId);
+async function sendLead(form, feedback, isWebsite) {
   if (!form || !feedback) return;
-  form.addEventListener("submit", event => {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
-    feedback.textContent = message + " No data was transmitted or saved. Backend submission will be implemented in a later project part.";
-    feedback.classList.add("is-visible");
-  });
+  const values = Object.fromEntries(new FormData(form).entries());
+  let payload;
+  if (isWebsite) {
+    const message = [
+      "Website package: " + values.package,
+      "Project name: " + values.company,
+      "Approx. pages: " + (values.pages || "Not specified"),
+      "Design preferences: " + (values.design || "Not specified"),
+      "Features/integrations: " + values.features,
+      "Target timeline: " + (values.timeline || "Flexible")
+    ].join("\n");
+    payload = { name: values.contactName, email: values.email, phone: values.phone, businessName: values.company,
+      service: "Website Development", message, consent: values.consent === "yes", source: "website-builder",
+      extra: { package: values.package, pages: values.pages, design: values.design, features: values.features, timeline: values.timeline } };
+  } else {
+    payload = { name: values.name, email: values.email, phone: values.phone, businessName: values.businessName,
+      businessType: values.businessType, service: values.service, message: values.details, consent: values.consent === "yes",
+      source: "service-detail", extra: { businessType: values.businessType } };
+  }
+  const button = form.querySelector('button[type="submit"]');
+  if (button) button.disabled = true;
+  feedback.textContent = "Sending your enquiry securely…"; feedback.classList.add("is-visible"); feedback.classList.remove("is-error");
+  try {
+    const response = await fetch("/api/enquiry", { method: "POST", credentials: "same-origin",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(payload) });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result?.error?.message || "Your enquiry could not be saved. Please retry.");
+    feedback.textContent = "Enquiry saved. Reference: " + result.lead.leadId + ". Keep this reference for follow-up.";
+    form.reset();
+    if (!isWebsite) { const field = $("#service-field"); if (field) field.value = service.title; }
+  } catch (error) { feedback.textContent = error.message || "Your enquiry could not be saved. Please retry."; feedback.classList.add("is-error"); }
+  finally { if (button) button.disabled = false; }
 }
-setupLocalPreview("#service-enquiry-form", "#service-feedback", "Your enquiry passed browser-side validation.");
-setupLocalPreview("#website-quote-form", "#website-feedback", "Your website project brief passed browser-side validation.");
+const serviceForm = $("#service-enquiry-form"), serviceFeedback = $("#service-feedback");
+if (serviceForm) serviceForm.addEventListener("submit", event => { event.preventDefault(); if (serviceForm.reportValidity()) sendLead(serviceForm, serviceFeedback, false); });
+const websiteForm = $("#website-quote-form"), websiteFeedback = $("#website-feedback");
+if (websiteForm) websiteForm.addEventListener("submit", event => { event.preventDefault(); if (websiteForm.reportValidity()) sendLead(websiteForm, websiteFeedback, true); });
 })();
