@@ -32,13 +32,13 @@ Responsive static website for a consultancy offering website development and pra
 
 ## Preview locally
 
-Open `index.html` directly, or run:
+You can open `index.html` directly to inspect the static pages. To test the Part 3 signup/login flow, run a local HTTP server so the browser's Web Crypto API is available:
 
 ```bash
 python -m http.server 8000
 ```
 
-Then visit `http://localhost:8000`.
+Then visit `http://localhost:8000`. The customer account, request records and selected-file metadata remain local to the current browser tab and are cleared when that tab session ends.
 
 ## Current form behaviour and limitations
 
