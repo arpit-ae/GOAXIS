@@ -34,7 +34,7 @@ Continue cumulatively from this repository. Do not restart or overwrite complete
 - [x] Responsive styling and mobile navigation on the new pages
 - [x] Quote-only messaging; no unapproved prices or guaranteed government approvals
 - [x] Forms disclose that submissions are preview-only and are not sent or saved
-- [x] Static integration checks: 9/9 passed (links, service keys, form wiring, package mapping, validation indicators and responsive styles)
+- [x] Static integration checks: 10/10 passed (links, service keys, form wiring, package mapping, validation indicators and responsive styles)
 
 ## Part 2 boundaries
 
