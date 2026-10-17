@@ -6,7 +6,7 @@ Continue cumulatively from this repository. Do not restart or overwrite complete
 |---|---|---|
 | 1 | Homepage and responsive frontend foundation | Complete |
 | 2 | Service catalogue, website-builder requirements and enquiry/quotation workflow | Complete — frontend |
-| 3 | Customer accounts, dashboard, orders and document interface | Pending |
+| 3 | Customer accounts, dashboard, orders and document interface | Complete — frontend preview |
 | 4 | Backend, database, admin dashboard and payment integration | Pending |
 | 5 | Security, testing, deployment and final launch review | Pending |
 
@@ -35,6 +35,23 @@ Continue cumulatively from this repository. Do not restart or overwrite complete
 - [x] Quote-only messaging; no unapproved prices or guaranteed government approvals
 - [x] Forms disclose that submissions are preview-only and are not sent or saved
 - [x] Static integration checks: 10/10 passed (links, service keys, form wiring, package mapping, validation indicators and responsive styles)
+
+## Part 3 acceptance
+
+- [x] Registration page with required name/email/password and confirmation validation
+- [x] Login preview and redirect to dashboard for a matching session profile
+- [x] Dashboard route checks for a demo session and redirects to login otherwise
+- [x] Profile display and browser-session profile editing
+- [x] Example order IDs, status cards and progress milestones
+- [x] Document selection UI with file type/size checks and clear preview-only messaging
+- [x] Logout action and customer-login links added to existing public pages
+- [x] Responsive styling and accessible form feedback
+- [ ] Production authentication, persistent orders and real document upload (Part 4)
+- [ ] Browser/device and production end-to-end testing (Part 5)
+
+## Part 3 boundaries
+
+This is only a frontend demonstration. It does not store passwords, authenticate users securely, create real orders, save profile data to a server, or upload files. The demo profile exists only in the browser session. Never enter real passwords or sensitive identity documents. Part 4 must implement server-side identity, secure sessions, authorization, D1 persistence and private R2 storage before collecting real customer information.
 
 ## Part 2 boundaries
 
