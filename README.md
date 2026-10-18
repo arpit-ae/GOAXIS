@@ -1,92 +1,45 @@
-# GOAXIS CONSULTANCY
+# GOAXIS CONSULTANCY — Static Website
 
-Cloudflare Pages website with static HTML/CSS/JavaScript, Pages Functions API, Cloudflare D1 database, and private R2 document storage.
+This repository is a simple static website built with HTML, CSS and browser-side JavaScript. It is intended for Cloudflare Pages Git deployment.
 
 ## Cloudflare Pages deployment
 
-This repository is configured for **Cloudflare Pages**, not a standalone Worker deployment.
-
-Use these Pages build settings:
-- Git repository: `arpit-ae/GOAXIS`
+- Repository: `arpit-ae/GOAXIS`
 - Production branch: `main`
 - Framework preset: `None`
-- Build command: `exit 0`
+- Build command: leave blank
 - Build output directory: `.`
-- Root directory: leave blank (repository root)
+- Root directory: leave blank
 
-The repository has no package-install/build step. Do **not** use `npx wrangler deploy` (that is the Worker deployment command and caused the earlier entry-point error). For Pages, use the Pages Git integration or `npx wrangler pages deploy . --project-name=goaxis-consultancy --branch=main`.
+Connect the repository in Cloudflare Dashboard → Workers & Pages → Create application → Pages → Connect to Git. Authorize the Cloudflare GitHub app for this repository, then save and deploy.
 
-### Connect GitHub when Cloudflare says “Missing git connection”
+If Cloudflare shows **Missing Git connection**, resolve the GitHub authorization/installation in Cloudflare and GitHub settings. Repository file changes cannot grant account-level authorization. If the existing project was created by Direct Upload, create a new Pages project using Connect to Git rather than deleting the old one first.
 
-1. Open Cloudflare Dashboard → **Workers & Pages** → **Create application** → **Pages** → **Connect to Git**.
-2. Choose GitHub and authorize/install the Cloudflare Pages GitHub application.
-3. Grant it access to the `arpit-ae/GOAXIS` repository (not only a different repository such as `arpit-ae/axis`).
-4. Select `main`, use the build settings above, and select **Save and Deploy**.
-5. If the existing Pages project was created with **Direct Upload**, Cloudflare does not let that project switch to Git integration. Create a new Pages project using **Connect to Git** instead; do not delete the old project until the new deployment is verified.
+## Website pages
 
-A repository commit cannot itself authorize Cloudflare's GitHub app or fix an account-level API token. If Cloudflare's Git connection is missing, resolve the GitHub installation/authorization in Cloudflare and GitHub settings.
+- `index.html` — homepage, service overview, about section and contact enquiry form
+- `services.html` — full service catalogue
+- `service.html` — service details and enquiry form
+- `website-builder.html` — website packages and project brief
+- `privacy.html` — privacy policy draft
+- `terms.html` — terms and conditions draft
+- `styles.css`, `part2.css` — styling
+- `app.js`, `part2.js` — mobile navigation and client-side form validation
+- `assets/favicon.svg` — site icon
+- `_headers` — baseline response security headers
 
-## Runtime bindings and secrets
+## Static-site limitation
 
-`wrangler.toml` is the Pages Functions configuration and declares:
-- D1 binding `DB`, database `goaxis-consultancy-db`
-- R2 binding `R2_BUCKET`, bucket `goaxis-customer-documents`
-- `CASHFREE_ENV = "sandbox"`
+This website intentionally has **no server, API, database, login portal, admin panel, or online payment integration**. Forms run only in the visitor's browser; they do not transmit or save enquiry details. Before publishing for real customers, add verified business contact details and a suitable form-delivery method, or update the forms to use a verified email/contact endpoint. Do not describe the forms as submitting successfully.
 
-Before using the API, confirm that the configured D1 database ID exists in the same Cloudflare account and that the R2 bucket exists with the exact name above. Wrangler configuration does not create either resource automatically.
+The Privacy Policy and Terms & Conditions are drafts. Review them and add accurate business details before launch. Government registration and licence outcomes must not be represented as guaranteed.
 
-From a terminal logged in to the correct Cloudflare account, run:
+## Local preview
+
+Open `index.html` in a browser, or run a simple local web server:
+
 ```bash
-npx wrangler whoami
-npx wrangler pages project list
-npx wrangler d1 list
-npx wrangler r2 bucket list
-npx wrangler d1 migrations apply goaxis-consultancy-db --remote
+python -m http.server 8000
 ```
 
-If the configured database or bucket is missing, create it in the same account and update the corresponding values in `wrangler.toml` to the actual resource IDs/names. Do not replace a valid database ID with a guessed value. Apply the SQL migration only after confirming the intended database.
-
-In the Pages project, configure these **server-side secrets** for both Preview and Production as appropriate:
-- `CASHFREE_APP_ID`
-- `CASHFREE_SECRET_KEY`
-
-Keep secrets out of Git, HTML, JavaScript, and public variables. Cashfree is intentionally set to sandbox. Do not switch to production until merchant approval and end-to-end payment/webhook tests are complete.
-
-## API and database
-
-- `functions/api/[[path]].js` routes `/api/*` requests to `src/worker.js`.
-- `migrations/0001_initial.sql` creates users, sessions, service catalogue, enquiries, orders, payments and document metadata, and seeds starter services.
-- `GET /api/health` is the deployment smoke test.
-- Other routes cover signup/login/logout, user profile, service catalogue, enquiries, orders, private document uploads, Cashfree payment creation/webhook, and admin overview/order updates/document verification.
-- Customer passwords are hashed server-side; sessions use secure HttpOnly cookies. Public signup cannot assign the admin role.
-
-After deployment, test:
-1. Open `https://<your-pages-domain>/`.
-2. Open `https://<your-pages-domain>/api/health`; expect JSON with `ok: true`.
-3. Test `GET /api/services`.
-4. Test signup/login with a throwaway account.
-5. Test enquiries, document uploads and Cashfree **sandbox** only after confirming D1/R2 bindings and secrets.
-6. Promote the verified admin account manually in the D1 console:
-   ```sql
-   UPDATE Users SET role='admin' WHERE email='YOUR_VERIFIED_ADMIN_EMAIL';
-   ```
-   Then visit `/admin.html`.
-
-## Frontend status and launch limitations
-
-- Homepage, services, service details, website-builder, terms and privacy pages are static HTML.
-- The API/backend implementation is present, but parts of the customer-facing portal and enquiry forms still contain **Part 3 demo/local-browser behavior** and are not all wired to the production API. A successful Pages deployment does not mean every form/payment workflow is production-ready.
-- The backend has no email verification/password reset, abuse/rate limiting, antivirus scanning or complete production monitoring yet.
-- The R2 bucket is private. Do not expose it publicly or return raw object URLs.
-- Review and replace legal-policy drafts and confirm real business contact details before collecting customer information.
-
-## Key files
-
-- `index.html`, `styles.css`, `app.js`: homepage
-- `services.html`, `service.html`, `website-builder.html`: service catalogue and website packages
-- `signup.html`, `login.html`, `dashboard.html`, `part3.js`, `part3.css`: customer portal prototype
-- `admin.html`, `admin.js`: admin UI
-- `functions/api/[[path]].js`, `src/worker.js`: Pages Functions API
-- `migrations/0001_initial.sql`: D1 schema and seed data
-- `wrangler.toml`: Pages output directory and bindings
-- `_headers`: baseline security headers
+Then visit `http://localhost:8000`.
