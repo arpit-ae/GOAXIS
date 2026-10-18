@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Contact GOAXIS CONSULTANCY about website development, business documentation and registration assistance.">
+<title>Contact Us | GOAXIS CONSULTANCY</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="part2.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="announcement">HAVE A BUSINESS REQUIREMENT? <a href="services.html">Explore services ↗</a></div>
+<header class="site-header"><div class="container nav-wrap">
+<a class="brand" href="index.html"><span class="brand-mark">G<span>.</span></span><span class="brand-copy"><strong>GOAXIS</strong><small>CONSULTANCY</small></span></a>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation">☰</button>
+<nav class="nav-links" id="primary-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="services.html">Our Services</a><a href="website-builder.html">Website Builder</a><a href="about.html">About</a><a href="contact.html" aria-current="page">Contact</a></nav>
+</div></header>
+<main id="main">
+<section class="p2-hero"><div class="container"><p class="eyebrow">CONTACT GOAXIS</p><h1>Tell us what<br><span>you need help with.</span></h1><p>Choose a service and prepare a short enquiry. This is currently a static website: the form checks your entries in your browser but does not send or store them.</p></div></section>
+<section class="section-pad"><div class="container detail-grid">
+<div><p class="eyebrow">BEFORE YOU START</p><h2>A few details.<br><span>One clear next step.</span></h2><p>Tell us what you are trying to do so the relevant service and next steps can be identified.</p>
+<div class="notice"><strong>Contact details are being finalised</strong><p>A verified business email address and phone number must be added here before the website is used to collect real enquiries. No contact details have been invented.</p></div>
+<div class="notice"><strong>Protect your information</strong><p>Do not enter Aadhaar, PAN, bank details, passwords or other sensitive information in this form. Do not upload identity documents.</p></div>
+</div>
+<form class="p2-form" id="contact-enquiry-form"><p class="eyebrow">ENQUIRY CHECKLIST</p><h2>Prepare your enquiry</h2><p class="form-intro">Complete the fields to check your enquiry locally. Nothing is transmitted or saved.</p>
+<label for="contact-name">Your name *</label><input id="contact-name" name="name" autocomplete="name" required maxlength="100">
+<label for="contact-email">Email address *</label><input id="contact-email" name="email" type="email" autocomplete="email" required maxlength="254">
+<label for="contact-phone">Phone number (optional)</label><input id="contact-phone" name="phone" type="tel" autocomplete="tel" maxlength="20" pattern="[+0-9() .-]{7,20}">
+<label for="contact-service">Service you are interested in *</label><select id="contact-service" name="service" required><option value="">Choose a service</option><option>Website Development</option><option>GST Registration Assistance</option><option>Udyam Registration Assistance</option><option>FSSAI Assistance</option><option>IEC Assistance</option><option>APEDA / Export Documentation</option><option>Business Documents</option><option>Other / Not sure yet</option></select>
+<label for="contact-message">Brief requirement *</label><textarea id="contact-message" name="message" rows="5" required maxlength="2000" placeholder="Describe what you need, without sensitive information."></textarea>
+<label class="consent"><input type="checkbox" required> I understand this static form does not send or save my information. *</label>
+<button class="button" type="submit">Check enquiry →</button><p class="form-feedback" id="contact-form-feedback" role="status" aria-live="polite"></p>
+</form></div></section>
+</main>
+<footer class="site-footer"><div class="container footer-bottom"><span>© <span id="current-year"></span> GOAXIS CONSULTANCY</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="services.html">Services</a></span></div></footer>
+<script>
+(() => {
+ const form = document.querySelector("#contact-enquiry-form");
+ const feedback = document.querySelector("#contact-form-feedback");
+ if (form && feedback) form.addEventListener("submit", event => {
+   event.preventDefault();
+   if (!form.reportValidity()) return;
+   feedback.textContent = "Your entries are valid, but nothing has been sent or saved. A verified contact method must be added before this website can receive enquiries.";
+   feedback.classList.add("is-visible");
+ });
+})();
+</script>
+</body></html>
