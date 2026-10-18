@@ -5,7 +5,7 @@ pages_build_output_dir = "."
 [[d1_databases]]
 binding = "DB"
 database_name = "goaxis-consultancy-db"
-database_id = "REPLACE_WITH_CLOUDFLARE_D1_DATABASE_ID"
+database_id = "f81de195-6559-486c-b6a9-be4fac6e5111"
 migrations_dir = "migrations"
 
 [[r2_buckets]]
