@@ -43,9 +43,16 @@ export async function onRequest({ request, env }) {
   const length = Number(request.headers.get("content-length") || "0");
   if (length > 12000) return respond({ error: "Your enquiry is too long. Please shorten it and try again." }, 413);
 
+  let rawBody;
+  try {
+    rawBody = await request.text();
+  } catch {
+    return respond({ error: "The submitted form could not be read. Please check it and try again." }, 400);
+  }
+  if (rawBody.length > 12000) return respond({ error: "Your enquiry is too long. Please shorten it and try again." }, 413);
   let input;
   try {
-    input = await request.json();
+    input = JSON.parse(rawBody);
   } catch {
     return respond({ error: "The submitted form could not be read. Please check it and try again." }, 400);
   }
