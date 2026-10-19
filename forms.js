@@ -36,6 +36,16 @@
     if (!form || !feedback || form.dataset.apiBound === "true") return;
 
     form.dataset.apiBound = "true";
+    // Low-friction honeypot for basic automated spam. It remains reachable to
+    // assistive technology only as a hidden field and should be left empty.
+    const trap = document.createElement("input");
+    trap.type = "text";
+    trap.name = "website";
+    trap.autocomplete = "off";
+    trap.tabIndex = -1;
+    trap.setAttribute("aria-hidden", "true");
+    trap.style.cssText = "position:absolute;left:-10000px;top:auto;width:1px;height:1px;opacity:0;pointer-events:none";
+    form.appendChild(trap);
     form.addEventListener("submit", async event => {
       event.preventDefault();
       if (!form.reportValidity()) return;
