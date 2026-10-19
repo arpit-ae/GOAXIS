@@ -1,45 +1,41 @@
-# GOAXIS CONSULTANCY — Static Website
+# GOAXIS CONSULTANCY
 
-This repository is a simple static website built with HTML, CSS and browser-side JavaScript. It is intended for Cloudflare Pages Git deployment.
+Static website hosted on Cloudflare Pages with a Pages Function for enquiry submission.
 
-## Cloudflare Pages deployment
+## Phase 1 — Working enquiry forms
 
-- Repository: `arpit-ae/GOAXIS`
+- Homepage enquiry, Contact enquiry, Service enquiry and Website quotation forms submit to `POST /api/enquiry`.
+- The Pages Function validates inputs, checks the request origin, applies length limits and stores valid enquiries in the D1 `Leads` table.
+- Successful submissions receive a reference such as `ENQ-2026-00001`.
+- Form errors are displayed to the visitor; the form is not presented as successful if the API or database is unavailable.
+- A simple honeypot helps reduce basic automated spam. It is not a substitute for edge rate limiting or a WAF rule.
+- Do not collect identity documents, Aadhaar/PAN numbers, passwords, OTPs or bank details through these public enquiry forms.
+
+## Cloudflare Pages setup
+
+- GitHub repository: `arpit-ae/GOAXIS`
 - Production branch: `main`
 - Framework preset: `None`
 - Build command: leave blank
 - Build output directory: `.`
-- Root directory: leave blank
+- The project uses `wrangler.toml` for the D1 binding named `DB`.
+- Confirm that the configured D1 database exists in the intended Cloudflare account before deployment.
+- Apply the migration in `migrations/0001_phase1_enquiries.sql` to the intended database before testing the live form.
+- Test in a Preview deployment first. Do not merge or deploy until the database binding and migration have been verified.
 
-Connect the repository in Cloudflare Dashboard → Workers & Pages → Create application → Pages → Connect to Git. Authorize the Cloudflare GitHub app for this repository, then save and deploy.
+## Test checklist
 
-If Cloudflare shows **Missing Git connection**, resolve the GitHub authorization/installation in Cloudflare and GitHub settings. Repository file changes cannot grant account-level authorization. If the existing project was created by Direct Upload, create a new Pages project using Connect to Git rather than deleting the old one first.
+1. Submit a valid enquiry from each of the four forms.
+2. Confirm each request returns a reference and creates exactly one `Leads` row.
+3. Confirm missing name/email/service/message is rejected.
+4. Confirm invalid email and invalid phone are rejected.
+5. Confirm wrong Origin, non-JSON request and oversized body are rejected.
+6. Simulate a missing DB binding and confirm the page displays a retryable error, not a false success.
+7. Check mobile and desktop layouts and keyboard accessibility.
 
-## Website pages
+## Important release limitations
 
-- `index.html` — homepage, service overview, about section and contact enquiry form
-- `services.html` — full service catalogue
-- `service.html` — service details and enquiry form
-- `website-builder.html` — website packages and project brief
-- `privacy.html` — privacy policy draft
-- `terms.html` — terms and conditions draft
-- `styles.css`, `part2.css` — styling
-- `app.js`, `part2.js` — mobile navigation and client-side form validation
-- `assets/favicon.svg` — site icon
-- `_headers` — baseline response security headers
-
-## Static-site limitation
-
-This website intentionally has **no server, API, database, login portal, admin panel, or online payment integration**. Forms run only in the visitor's browser; they do not transmit or save enquiry details. Before publishing for real customers, add verified business contact details and a suitable form-delivery method, or update the forms to use a verified email/contact endpoint. Do not describe the forms as submitting successfully.
-
-The Privacy Policy and Terms & Conditions are drafts. Review them and add accurate business details before launch. Government registration and licence outcomes must not be represented as guaranteed.
-
-## Local preview
-
-Open `index.html` in a browser, or run a simple local web server:
-
-```bash
-python -m http.server 8000
-```
-
-Then visit `http://localhost:8000`.
+- This phase only implements enquiry capture. Admin review/notification workflows are a later phase.
+- Edge rate limiting/WAF configuration, monitoring, final privacy/legal review and full production security testing remain launch requirements.
+- The privacy policy is still a draft and must be completed before collecting real customer information.
+- The GitHub branch is not automatically live merely because code is committed. Confirm the Cloudflare Pages Git connection and deploy a Preview before merging to `main`.
