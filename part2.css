@@ -18,3 +18,24 @@
 .service-overview h3{color:var(--navy);font-size:16px;margin:14px 0 6px}
 .service-overview p{font-size:12px;line-height:1.8;color:#71818b;margin:0}
 @media(max-width:700px){.service-overview{grid-template-columns:1fr}}
+
+
+/* Phase 1: clear form submission feedback */
+.form-feedback.is-error,
+.feedback.is-error {
+  display: block;
+  color: #a61b1b;
+  background: #fff1f0;
+  border: 1px solid #f2c3c0;
+  border-radius: 5px;
+  padding: 12px;
+  line-height: 1.7;
+}
+.feedback.is-visible {
+  display: block;
+  padding: 12px;
+  border-radius: 5px;
+  background: #eff8f2;
+  color: #176544;
+  line-height: 1.7;
+}

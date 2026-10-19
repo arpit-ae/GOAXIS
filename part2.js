@@ -117,16 +117,4 @@ document.querySelectorAll(".package-select").forEach(button => button.addEventLi
   const packageField = $("#package");
   if (packageField) { packageField.value = button.dataset.package; $("#quote-form-section")?.scrollIntoView({behavior:"smooth"}); packageField.focus({preventScroll:true}); }
 }));
-function setupLocalPreview(formId, feedbackId, message) {
-  const form = $(formId), feedback = $(feedbackId);
-  if (!form || !feedback) return;
-  form.addEventListener("submit", event => {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
-    feedback.textContent = message + " No data was transmitted or saved. Backend submission will be implemented in a later project part.";
-    feedback.classList.add("is-visible");
-  });
-}
-setupLocalPreview("#service-enquiry-form", "#service-feedback", "Your enquiry passed browser-side validation.");
-setupLocalPreview("#website-quote-form", "#website-feedback", "Your website project brief passed browser-side validation.");
 })();

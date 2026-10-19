@@ -1,0 +1,33 @@
+name: GOAXIS Phase 1 checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [feature/phase1-working-forms]
+
+jobs:
+  syntax-and-wiring:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check browser JavaScript syntax
+        run: |
+          node --check app.js
+          node --check forms.js
+          node --check part2.js
+      - name: Check Pages Function syntax
+        run: node --input-type=module --check < functions/api/enquiry.js
+      - name: Verify all enquiry forms load the submission handler
+        run: |
+          grep -q 'src="forms.js"' index.html
+          grep -q 'src="forms.js"' contact.html
+          grep -q 'src="forms.js"' service.html
+          grep -q 'src="forms.js"' website-builder.html
+          grep -q 'POST' functions/api/enquiry.js
+          grep -q 'INSERT INTO Leads' functions/api/enquiry.js
