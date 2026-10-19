@@ -20,7 +20,7 @@ Static website hosted on Cloudflare Pages with a Pages Function for enquiry subm
 - Build output directory: `.`
 - The project uses `wrangler.toml` for the D1 binding named `DB`.
 - Confirm that the configured D1 database exists in the intended Cloudflare account before deployment.
-- Apply the migration in `migrations/0001_phase1_enquiries.sql` to the intended database before testing the live form.
+- Apply the migration in `migrations/0002_phase1_enquiries.sql` to the intended database before testing the live form.
 - Test in a Preview deployment first. Do not merge or deploy until the database binding and migration have been verified.
 
 ## Test checklist
